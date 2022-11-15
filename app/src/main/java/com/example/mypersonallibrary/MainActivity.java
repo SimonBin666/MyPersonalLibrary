@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         );
     }
     private void selectDrawerItem(MenuItem menuItem){
+        // Todo
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
         mDrawer.closeDrawers();
