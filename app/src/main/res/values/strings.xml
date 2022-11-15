@@ -2,7 +2,9 @@
     <string name="app_name">My Personal Library</string>
     <string name="drawer_open">Open Navigation Drawer</string>
     <string name="drawer_close">Close Navigation Drawer</string>
-    <string name="first">First</string>
-    <string name="second">Second</string>
-    <string name="third">Third</string>
+    <string name="first">第一</string>
+    <string name="second">第二</string>
+    <string name="third">第三</string>
+    <string name="fab_menu_1">添加图书</string>
+    <string name="fab_menu_2">批量添加</string>
 </resources>

@@ -9,6 +9,9 @@ import android.content.res.Configuration;
 import androidx.annotation.NonNull;
 import android.view.MenuItem;
 import androidx.core.view.GravityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import android.util.Log;
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +31,10 @@ public class MainActivity extends AppCompatActivity {
         mDrawer.addDrawerListener(mBarDrawerToggle);
         mNavigationView = findViewById(R.id.nvView);
         setupDrawerContent(mNavigationView);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .add(R.id.fragment_container,new bookListFragment())
+                .commit();
     }
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -51,7 +58,25 @@ public class MainActivity extends AppCompatActivity {
         );
     }
     private void selectDrawerItem(MenuItem menuItem){
-        // Todo
+        Fragment fragment = null;
+        Class fragmentClass;
+        switch (menuItem.getItemId()){
+            case R.id.nav_first_fragment:
+                fragmentClass = bookListFragment.class;
+                break;
+            default:
+                fragmentClass = bookListFragment.class;
+        }
+        try{
+            fragment = (Fragment) fragmentClass.newInstance();
+        }catch (Exception e){
+            Log.e(TAG,e.toString());
+        }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container,fragment)
+                .commit();
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
         mDrawer.closeDrawers();
