@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">My Personal Library</string>
-    <string name="drawer_open">Open Navigation Drawer</string>
-    <string name="drawer_close">Close Navigation Drawer</string>
+    <string name="app_name">书架</string>
+    <string name="drawer_open">打开导航抽屉</string>
+    <string name="drawer_close">关闭导航抽屉</string>
     <string name="first">第一</string>
     <string name="second">第二</string>
     <string name="third">第三</string>
