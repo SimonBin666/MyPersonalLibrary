@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setupDrawerContent(mNavigationView);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .add(R.id.fragment_container,new bookListFragment())
+                .add(R.id.fragment_container,new BookListFragment())
                 .commit();
     }
     @Override
@@ -62,10 +62,10 @@ public class MainActivity extends AppCompatActivity {
         Class fragmentClass;
         switch (menuItem.getItemId()){
             case R.id.nav_first_fragment:
-                fragmentClass = bookListFragment.class;
+                fragmentClass = BookListFragment.class;
                 break;
             default:
-                fragmentClass = bookListFragment.class;
+                fragmentClass = BookListFragment.class;
         }
         try{
             fragment = (Fragment) fragmentClass.newInstance();
