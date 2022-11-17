@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 public class BookListFragment extends Fragment{
-    private static String TAG = "BookListFragment";
+    private static final String TAG = "BookListFragment";
     private FloatingActionMenu actionAdd;
     private FloatingActionButton fab1;
     private FloatingActionButton fab2;
