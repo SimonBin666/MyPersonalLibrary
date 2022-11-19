@@ -34,8 +34,8 @@ public class DouBanFetcher extends BookFetcher{
             @Override
             public void onResponse(Call<DouBanJson> call, Response<DouBanJson> response) {
                 if(response.code() == 200) {
-                    Log.i(TAG, "GET Douban information successfully, id = " + response.body().getId()
-                            +", title = " + response.body().getTitle());
+                    Log.i(TAG, "获取豆瓣信息成功，id = " + response.body().getId()
+                            +"，标题 = " + response.body().getTitle());
                     success = true;
                     mBook = new Book();
                     mBook.setTitle(response.body().getTitle());
@@ -57,21 +57,21 @@ public class DouBanFetcher extends BookFetcher{
                     try {
                         pubDate = df.parse(response.body().getPubdate());
                     }catch (ParseException pe){
-                        Log.e(TAG,"Parse Date Exception"+pe);
+                        Log.e(TAG,"解析日期异常"+pe);
                     }
                     mBook.setPubtime(pubDate);
                     String imageURL = response.body().getImages().getLarge();
                     getAndSaveImg(imageURL,mBook.getId());
                 }else{
-                    Log.w(TAG,"Unexpected response code " + response.code() + ", isbn = " + isbn);
-                    Log.i(TAG,"Unexpected response code " + response.code() + ", isbn = " + isbn);
+                    Log.w(TAG,"意外的响应代码" + response.code() + "，isbn = " + isbn);
+                    Log.i(TAG,"意外的响应代码" + response.code() + "，isbn = " + isbn);
                     Toast.makeText(context,R.string.fetcher_response_unmatched,Toast.LENGTH_LONG).show();
                     success = false;
                 }
             }
             @Override
             public void onFailure(Call<DouBanJson> call, Throwable t) {
-                Log.w(TAG,"GET Douban information failed, " + t.toString());
+                Log.w(TAG,"获取豆瓣信息失败，" + t.toString());
                 Toast.makeText(context,R.string.fetcher_response_unmatched,Toast.LENGTH_LONG).show();
                 success = false;
             }

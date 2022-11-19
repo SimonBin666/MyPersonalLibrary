@@ -33,7 +33,7 @@ public abstract class BookFetcher {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.i(TAG,"获取下载图片响应，代码= " + response.code());
+                Log.i(TAG,"获取下载图片响应，代码 = " + response.code());
                 if(!saveImgToDisk(response.body(),id)){
                 }
             }
@@ -51,7 +51,7 @@ public abstract class BookFetcher {
     }
     private boolean saveImgToDisk(ResponseBody responseBody,Long id) {
         try {
-            Log.d(TAG, "Begin to save cover to external storage");
+            Log.d(TAG, "开始将封面保存到外部存储");
             InputStream inputStream = null;
             OutputStream outputStream = null;
             inputStream = responseBody.byteStream();
@@ -62,7 +62,7 @@ public abstract class BookFetcher {
                     outputStream.write(c);
                 }
             } catch (IOException ioe) {
-                Log.e(TAG, "IOException, " + ioe.toString());
+                Log.e(TAG, "IO异常，" + ioe.toString());
                 return false;
             } finally {
                 if (inputStream != null) {
@@ -71,13 +71,13 @@ public abstract class BookFetcher {
                 outputStream.close();
             }
         } catch (FileNotFoundException e) {
-            Log.e(TAG, "File not found exception, " + e.toString());
+            Log.e(TAG, "找不到文件异常，" + e.toString());
             return false;
         } catch (IOException ioe) {
-            Log.e(TAG, "IOException, " + ioe.toString());
+            Log.e(TAG, "IO异常，" + ioe.toString());
             return false;
         }
-        Log.i(TAG, "Save image successfully.");
+        Log.i(TAG, "成功保存图片。");
         return true;
     }
 }
