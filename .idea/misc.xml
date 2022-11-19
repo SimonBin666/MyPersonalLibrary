@@ -5,10 +5,19 @@
       <map>
         <entry key="..\:/Android_Studio_Projects/MyPersonalLibrary/app/src/main/res/drawable-v24/ic_lab_background.xml" value="0.256" />
         <entry key="..\:/Android_Studio_Projects/MyPersonalLibrary/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1235" />
+        <entry key="..\:/Android_Studio_Projects/MyPersonalLibrary/app/src/main/res/drawable-xxhdpi/ic_chat.xml" value="0.145" />
+        <entry key="..\:/Android_Studio_Projects/MyPersonalLibrary/app/src/main/res/drawable-xxhdpi/ic_label.xml" value="0.145" />
+        <entry key="..\:/Android_Studio_Projects/MyPersonalLibrary/app/src/main/res/drawable-xxhdpi/ic_reading_status.xml" value="0.2105" />
+        <entry key="..\:/Android_Studio_Projects/MyPersonalLibrary/app/src/main/res/drawable-xxhdpi/ic_view_list.xml" value="0.145" />
+        <entry key="..\:/Android_Studio_Projects/MyPersonalLibrary/app/src/main/res/drawable/ic_assignment.xml" value="0.145" />
+        <entry key="..\:/Android_Studio_Projects/MyPersonalLibrary/app/src/main/res/drawable/ic_earth.xml" value="0.145" />
         <entry key="..\:/Android_Studio_Projects/MyPersonalLibrary/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1235" />
         <entry key="..\:/Android_Studio_Projects/MyPersonalLibrary/app/src/main/res/drawable/ic_title.xml" value="0.256" />
+        <entry key="..\:/Android_Studio_Projects/MyPersonalLibrary/app/src/main/res/layout/activity_bookedit.xml" value="0.13489583333333333" />
         <entry key="..\:/Android_Studio_Projects/MyPersonalLibrary/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Android_Studio_Projects/MyPersonalLibrary/app/src/main/res/layout/booklist_fragment.xml" value="0.264" />
+        <entry key="..\:/Android_Studio_Projects/MyPersonalLibrary/app/src/main/res/layout/fragment_booklist.xml" value="0.13489583333333333" />
+        <entry key="..\:/Android_Studio_Projects/MyPersonalLibrary/app/src/main/res/layout/main_toolbar.xml" value="0.16893115942028986" />
         <entry key="..\:/Android_Studio_Projects/MyPersonalLibrary/app/src/main/res/layout/toolbar.xml" value="0.1" />
         <entry key="..\:/Android_Studio_Projects/MyPersonalLibrary/app/src/main/res/layout/view_cover_and_info.xml" value="0.2509057971014493" />
         <entry key="..\:/Android_Studio_Projects/MyPersonalLibrary/app/src/main/res/menu/menu_drawer.xml" value="0.264" />

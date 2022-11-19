@@ -17,4 +17,10 @@
     <string name="book_pubdate_text_view">发布日期:</string>
     <string name="book_isbn_text_view">ISBN:</string>
     <string name="fetcher_response_unmatched">获取图书详细信息失败。 请检查您的条形码。</string>
+    <string name="separator_text_view1">细节</string>
+    <string name="reading_status_image_view">阅读状态</string>
+    <string name="book_shelf_image_view">书架</string>
+    <string name="note_edit_text_hint">笔记</string>
+    <string name="label_image_view">标签</string>
+    <string name="website_edit_text_hint">网站</string>
 </resources>

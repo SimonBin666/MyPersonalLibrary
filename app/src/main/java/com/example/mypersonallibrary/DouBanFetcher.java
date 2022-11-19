@@ -1,14 +1,16 @@
 package com.example.mypersonallibrary;
-
 import android.content.Context;
+import androidx.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 import java.text.DateFormat;
-import java.text.FieldPosition;
 import java.text.ParseException;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -18,8 +20,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 public class DouBanFetcher extends BookFetcher{
     private static final String TAG = "DouBanFetcher";
-    private Book mBook;
-    private boolean success = false;
     @Override
     public void getBookInfo(final Context context, final String isbn){
         mContext = context;
@@ -35,11 +35,10 @@ public class DouBanFetcher extends BookFetcher{
             public void onResponse(Call<DouBanJson> call, Response<DouBanJson> response) {
                 if(response.code() == 200) {
                     Log.i(TAG, "获取豆瓣信息成功，id = " + response.body().getId()
-                            +"，标题 = " + response.body().getTitle());
-                    success = true;
+                            +"， 标题 = " + response.body().getTitle());
                     mBook = new Book();
                     mBook.setTitle(response.body().getTitle());
-                    mBook.setId(Long.parseLong(response.body().getId(),10));
+                    //mBook.setId(Long.parseLong(response.body().getId(),10));
                     mBook.setIsbn(isbn);
                     if(response.body().getAuthor().size()!=0){
                         mBook.setAuthors(response.body().getAuthor());
@@ -51,6 +50,11 @@ public class DouBanFetcher extends BookFetcher{
                     }else{
                         mBook.setTranslators(null);
                     }
+                    if(mBook.getWebIds() == null){
+                        mBook.setWebIds(new HashMap<String, String>());
+                    }
+                    mBook.getWebIds().put("douban",response.body().getId());
+                    mBook.setAddTime(Calendar.getInstance());
                     mBook.setPublisher(response.body().getPublisher());
                     DateFormat df = new SimpleDateFormat("yyyy-MM");
                     Date pubDate = new Date();
@@ -61,19 +65,14 @@ public class DouBanFetcher extends BookFetcher{
                     }
                     mBook.setPubtime(pubDate);
                     String imageURL = response.body().getImages().getLarge();
-                    getAndSaveImg(imageURL,mBook.getId());
+                    getAndSaveImg(imageURL);
                 }else{
                     Log.w(TAG,"意外的响应代码" + response.code() + "，isbn = " + isbn);
-                    Log.i(TAG,"意外的响应代码" + response.code() + "，isbn = " + isbn);
-                    Toast.makeText(context,R.string.fetcher_response_unmatched,Toast.LENGTH_LONG).show();
-                    success = false;
                 }
             }
             @Override
             public void onFailure(Call<DouBanJson> call, Throwable t) {
                 Log.w(TAG,"获取豆瓣信息失败，" + t.toString());
-                Toast.makeText(context,R.string.fetcher_response_unmatched,Toast.LENGTH_LONG).show();
-                success = false;
             }
         });
     }
