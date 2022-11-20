@@ -29,4 +29,7 @@
     <string name="book_publisher_edit_text_hint">图书出版商</string>
     <string name="book_isbn_edit_text_hint">图书的ISBN</string>
     <string name="tool_bar_navigation_description">丢弃</string>
+    <string name="label_edit_text_hint">添加标签</string>
+    <string name="book_pubyear_edit_text_hint">年</string>
+    <string name="book_pubmonth_edit_text_hint">月</string>
 </resources>

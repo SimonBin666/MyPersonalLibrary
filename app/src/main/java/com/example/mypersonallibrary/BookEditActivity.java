@@ -56,7 +56,7 @@ public class BookEditActivity extends AppCompatActivity{
         authorEditText = (EditText) findViewById(R.id.book_author_edit_text);
         translatorEditText = (EditText) findViewById(R.id.book_translator_edit_text);
         publisherEditText = (EditText) findViewById(R.id.book_publisher_edit_text);
-        pubdateEditText = (EditText) findViewById(R.id.book_pubdate_edit_text);
+        //pubdateEditText = (EditText) findViewById(R.id.book_pubdate_edit_text);
         isbnEditText = (EditText) findViewById(R.id.book_isbn_edit_text);
         translator_layout = (LinearLayout) findViewById(R.id.translator_layout);
         titleEditText.setText(mBook.getTitle());
