@@ -18,11 +18,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 public class DouBanFetcher extends BookFetcher{
     private static final String TAG = "DoubanFetcher";
     @Override
     public void getBookInfo(final Context context, final String isbn){
         mContext = context;
+        mHandler = new Handler(Looper.getMainLooper());
         Retrofit mRetrofit;
         mRetrofit = new Retrofit.Builder()
                 .baseUrl("https://api.douban.com/v2/book/")
@@ -42,12 +46,14 @@ public class DouBanFetcher extends BookFetcher{
                     mBook.setIsbn(isbn);
                     if(response.body().getAuthor().size()!=0){
                         mBook.setAuthors(response.body().getAuthor());
-                    }else{
+                    }
+                    else{
                         mBook.setAuthors(null);
                     }
                     if(response.body().getTranslator().size()!=0){
                         mBook.setTranslators(response.body().getTranslator());
-                    }else{
+                    }
+                    else{
                         mBook.setTranslators(null);
                     }
                     if(mBook.getWebIds() == null){
@@ -60,13 +66,25 @@ public class DouBanFetcher extends BookFetcher{
                     Date pubDate = new Date();
                     try {
                         pubDate = df.parse(response.body().getPubdate());
-                    }catch (ParseException pe){
+                    }
+                    catch (ParseException pe){
                         Log.e(TAG,"解析日期异常"+pe);
                     }
                     mBook.setPubtime(pubDate);
-                    String imageURL = response.body().getImages().getLarge();
-                    getAndSaveImg(imageURL);
-                }else{
+                    final String imageURL = response.body().getImages().getLarge();
+                    //getAndSaveImg(imageURL);
+                    mHandler.post(new Runnable(){
+                        @Override
+                        public void run(){
+                            Intent i = new Intent(mContext,BookEditActivity.class);
+                            i.putExtra(BookEditActivity.BOOK,mBook);
+                            i.putExtra(BookEditActivity.downloadCover,true);
+                            i.putExtra(BookEditActivity.imageURL,imageURL);
+                            mContext.startActivity(i);
+                        }
+                    });
+                }
+                else{
                     Log.w(TAG,"意外的响应代码" + response.code() + "，isbn = " + isbn);
                 }
             }

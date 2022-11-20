@@ -23,4 +23,10 @@
     <string name="note_edit_text_hint">笔记</string>
     <string name="label_image_view">标签</string>
     <string name="website_edit_text_hint">网站</string>
+    <string name="book_title_edit_text_hint">书名</string>
+    <string name="book_author_edit_text_hint">用空格分隔多个</string>
+    <string name="book_translator_edit_text_hint">用空格分隔多个</string>
+    <string name="book_publisher_edit_text_hint">图书出版商</string>
+    <string name="book_isbn_edit_text_hint">图书的ISBN</string>
+    <string name="tool_bar_navigation_description">丢弃</string>
 </resources>
