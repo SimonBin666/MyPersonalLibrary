@@ -12,7 +12,6 @@ public class BookEditActivity extends AppCompatActivity{
         intent.putExtra(mode,startMode);
         return intent;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);

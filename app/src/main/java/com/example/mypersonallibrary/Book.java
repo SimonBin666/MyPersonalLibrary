@@ -1,10 +1,11 @@
 package com.example.mypersonallibrary;
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-public class Book {
+public class Book implements Serializable{
     private String title;
     private UUID id;
     private List<String> authors;

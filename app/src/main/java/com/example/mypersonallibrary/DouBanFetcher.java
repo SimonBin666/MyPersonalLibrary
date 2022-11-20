@@ -19,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 public class DouBanFetcher extends BookFetcher{
-    private static final String TAG = "DouBanFetcher";
+    private static final String TAG = "DoubanFetcher";
     @Override
     public void getBookInfo(final Context context, final String isbn){
         mContext = context;

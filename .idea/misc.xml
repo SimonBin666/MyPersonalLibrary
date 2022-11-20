@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android_Studio_Projects/MyPersonalLibrary/app/src/main/res/drawable-v21/fab_label_background.xml" value="0.2105" />
         <entry key="..\:/Android_Studio_Projects/MyPersonalLibrary/app/src/main/res/drawable-v24/ic_lab_background.xml" value="0.256" />
         <entry key="..\:/Android_Studio_Projects/MyPersonalLibrary/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1235" />
         <entry key="..\:/Android_Studio_Projects/MyPersonalLibrary/app/src/main/res/drawable-xxhdpi/ic_chat.xml" value="0.145" />

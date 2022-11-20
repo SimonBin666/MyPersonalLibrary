@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import com.example.mypersonallibrary.Book;
 public class BookBaseHelper extends SQLiteOpenHelper{
-    private static final int VERSION = 1;
+    private static int VERSION = 1;
     private static final String DATABASE_NAME = "bookList.db";
     public BookBaseHelper(Context context){super(context,DATABASE_NAME,null,VERSION);}
     @Override

@@ -1,7 +1,6 @@
 package com.example.mypersonallibrary;
-
 import java.util.List;
-public class DouBanJson {
+public class DouBanJson{
     /**
      * id : 1003078
      * isbn10 : 7505715666
@@ -36,7 +35,6 @@ public class DouBanJson {
      * catalog : 序言：法兰西玫瑰
      小王子
      圣埃克苏佩里年表
-
      * ebook_url : https://read.douban.com/ebook/1234567/(该字段只在存在对应电子书时提供)
      * ebook_price : 12.00
      */

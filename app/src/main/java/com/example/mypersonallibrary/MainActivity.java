@@ -1,5 +1,4 @@
 package com.example.mypersonallibrary;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -13,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import android.util.Log;
 import android.os.Bundle;
-
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private Toolbar mToolbar;
@@ -24,12 +22,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mToolbar = findViewById(R.id.main_toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(mToolbar);
-        mDrawer = findViewById(R.id.drawer_layout);
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         mBarDrawerToggle = new ActionBarDrawerToggle(this,mDrawer,mToolbar,R.string.drawer_open,R.string.drawer_close);
         mDrawer.addDrawerListener(mBarDrawerToggle);
-        mNavigationView = findViewById(R.id.nvView);
+        mNavigationView = (NavigationView)findViewById(R.id.nvView);
         setupDrawerContent(mNavigationView);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
@@ -37,18 +35,18 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
+    protected void onPostCreate(Bundle savedInstanceState){
         super.onPostCreate(savedInstanceState);
         mBarDrawerToggle.syncState();
     }
     @Override
     public void onConfigurationChanged(Configuration configuration){
-            super.onConfigurationChanged(configuration);
+        super.onConfigurationChanged(configuration);
         mBarDrawerToggle.onConfigurationChanged(configuration);
     }
     private void setupDrawerContent(NavigationView navigationView){
         navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
+                new NavigationView.OnNavigationItemSelectedListener(){
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         selectDrawerItem(item);
@@ -69,10 +67,10 @@ public class MainActivity extends AppCompatActivity {
         }
         try{
             fragment = (Fragment) fragmentClass.newInstance();
-        }catch (Exception e){
+        }
+        catch (Exception e){
             Log.e(TAG,e.toString());
         }
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.fragment_container,fragment)
@@ -83,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        switch(item.getItemId()){
             case android.R.id.home:
                 mDrawer.openDrawer(GravityCompat.START);
                 return true;
