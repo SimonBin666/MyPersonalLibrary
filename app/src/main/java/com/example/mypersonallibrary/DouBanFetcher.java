@@ -21,6 +21,7 @@ import retrofit2.http.Path;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
+import java.io.FileInputStream;
 public class DouBanFetcher extends BookFetcher{
     private static final String TAG = "DoubanFetcher";
     @Override
@@ -39,7 +40,7 @@ public class DouBanFetcher extends BookFetcher{
             public void onResponse(Call<DouBanJson> call, Response<DouBanJson> response) {
                 if(response.code() == 200) {
                     Log.i(TAG, "获取豆瓣信息成功，id = " + response.body().getId()
-                            +"， 标题 = " + response.body().getTitle());
+                            +"，标题 = " + response.body().getTitle());
                     mBook = new Book();
                     mBook.setTitle(response.body().getTitle());
                     //mBook.setId(Long.parseLong(response.body().getId(),10));
@@ -61,18 +62,20 @@ public class DouBanFetcher extends BookFetcher{
                     }
                     mBook.getWebIds().put("douban",response.body().getId());
                     mBook.setAddTime(Calendar.getInstance());
-                    mBook.setPublisher(response.body().getPublisher());
-                    DateFormat df = new SimpleDateFormat("yyyy-MM");
-                    Date pubDate = new Date();
-                    try {
-                        pubDate = df.parse(response.body().getPubdate());
+                    String rawDate = response.body().getPubdate();
+                    Log.i(TAG,"生日期 = " + rawDate);
+                    int firstSplit  = rawDate.indexOf("-");
+                    int lastSplit = rawDate.lastIndexOf("-");
+                    String year = rawDate.substring(0,firstSplit);
+                    if(firstSplit == lastSplit){
+                        lastSplit = rawDate.length();
                     }
-                    catch (ParseException pe){
-                        Log.e(TAG,"解析日期异常"+pe);
-                    }
-                    mBook.setPubtime(pubDate);
+                    String month = rawDate.substring(firstSplit+1,lastSplit);
+                    Log.i(TAG,"第一 = " + firstSplit + "，第二 = " + lastSplit + "，月 = " + month + "，年 = " + year);
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(Integer.parseInt(year),Integer.parseInt(month)-1,1);
+                    mBook.setPubtime(calendar);
                     final String imageURL = response.body().getImages().getLarge();
-                    //getAndSaveImg(imageURL);
                     mHandler.post(new Runnable(){
                         @Override
                         public void run(){

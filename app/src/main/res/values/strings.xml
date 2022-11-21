@@ -32,4 +32,16 @@
     <string name="label_edit_text_hint">添加标签</string>
     <string name="book_pubyear_edit_text_hint">年</string>
     <string name="book_pubmonth_edit_text_hint">月</string>
+    <string-array name="reading_status_array">
+        <item>选择阅读状态</item>
+        <item>未读</item>
+        <item>阅读</item>
+        <item>阅读</item>
+    </string-array>
+    <string name="custom_spinner_item">添新</string>
+    <string name="custom_book_shelf_dialog_edit_text">书架名称</string>
+    <string name="custom_book_shelf_dialog_title">定制书架</string>
+    <string name="default_book_shelf_name">默认书架</string>
+    <string name="book_edit_activity_title">编辑书籍</string>
+    <string name="book_edit_menu_save">保存</string>
 </resources>
