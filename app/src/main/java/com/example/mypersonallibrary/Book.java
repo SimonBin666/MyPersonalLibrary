@@ -34,91 +34,91 @@ public class Book implements Serializable{
     public String getCoverPhotoFileName(){
         return "Cover_"+id.toString()+".jpg";
     }
-    public Calendar getAddTime() {
+    public Calendar getAddTime(){
         return addTime;
     }
-    public void setAddTime(Calendar addTime) {
+    public void setAddTime(Calendar addTime){
         this.addTime = addTime;
     }
-    public Map<String, String> getWebIds() {
+    public Map<String, String> getWebIds(){
         return WebIds;
     }
-    public void setWebIds(Map<String, String> webIds) {
+    public void setWebIds(Map<String, String> webIds){
         WebIds = webIds;
     }
-    public UUID getId() {
+    public UUID getId(){
         return id;
     }
-    public void setId(UUID id) {
+    public void setId(UUID id){
         this.id = id;
     }
-    public String getIsbn() {
+    public String getIsbn(){
         return isbn;
     }
-    public void setIsbn(String isbn) {
+    public void setIsbn(String isbn){
         this.isbn = isbn;
     }
-    public String getPublisher() {
+    public String getPublisher(){
         return publisher;
     }
-    public void setPublisher(String publisher) {
+    public void setPublisher(String publisher){
         this.publisher = publisher;
     }
-    public Calendar getPubtime() {
+    public Calendar getPubtime(){
         return pubtime;
     }
-    public void setPubtime(Calendar pubtime) {
+    public void setPubtime(Calendar pubtime){
         this.pubtime = pubtime;
     }
-    public String getTitle() {
+    public String getTitle(){
         return title;
     }
-    public void setTitle(String title) {
+    public void setTitle(String title){
         this.title = title;
     }
-    public List<String> getAuthors() {
+    public List<String> getAuthors(){
         return authors;
     }
-    public void setAuthors(List<String> authors) {
+    public void setAuthors(List<String> authors){
         this.authors = authors;
     }
-    public List<String> getTranslators() {
+    public List<String> getTranslators(){
         return translators;
     }
     public void setTranslators(List<String> translators) {
         this.translators = translators;
     }
-    public boolean isHasCover() {
+    public boolean isHasCover(){
         return hasCover;
     }
-    public void setHasCover(boolean hasCover) {
+    public void setHasCover(boolean hasCover){
         this.hasCover = hasCover;
     }
-    public UUID getBookshelfID() {
+    public UUID getBookshelfID(){
         return bookshelfID;
     }
-    public void setBookshelfID(UUID bookshelfID) {
+    public void setBookshelfID(UUID bookshelfID){
         this.bookshelfID = bookshelfID;
     }
-    public int getReadingStatus() {
+    public int getReadingStatus(){
         return readingStatus;
     }
-    public void setReadingStatus(int readingStatus) {
+    public void setReadingStatus(int readingStatus){
         this.readingStatus = readingStatus;
     }
-    public String getNotes() {
+    public String getNotes(){
         return notes;
     }
-    public void setNotes(String notes) {
+    public void setNotes(String notes){
         this.notes = notes;
     }
-    public String getWebsite() {
+    public String getWebsite(){
         return website;
     }
-    public void setWebsite(String website) {
+    public void setWebsite(String website){
         this.website = website;
     }
-    public List<UUID> getLabelID() {
+    public List<UUID> getLabelID(){
         return labelID;
     }
     public void addLabel(Label label){

@@ -22,6 +22,5 @@ public abstract class BookFetcher {
     protected Context mContext;
     protected Book mBook;
     protected Handler mHandler;
-
     protected abstract void getBookInfo(Context context, String isbn);
 }

@@ -56,47 +56,47 @@ public class DouBanJson{
          */
         private String large;
         private String medium;
-        public String getLarge() {
+        public String getLarge(){
             return large;
         }
-        public void setLarge(String large) {
+        public void setLarge(String large){
             this.large = large;
         }
-        public String getMedium() {
+        public String getMedium(){
             return medium;
         }
-        public void setMedium(String medium) {
+        public void setMedium(String medium){
             this.medium = medium;
         }
     }
-    public List<String> getAuthor() {
+    public List<String> getAuthor(){
         return author;
     }
-    public String getId() {
+    public String getId(){
         return id;
     }
-    public ImagesBean getImages() {
+    public ImagesBean getImages(){
         return images;
     }
-    public String getIsbn10() {
+    public String getIsbn10(){
         return isbn10;
     }
-    public String getIsbn13() {
+    public String getIsbn13(){
         return isbn13;
     }
-    public String getPubdate() {
+    public String getPubdate(){
         return pubdate;
     }
-    public String getPublisher() {
+    public String getPublisher(){
         return publisher;
     }
-    public String getSubtitle() {
+    public String getSubtitle(){
         return subtitle;
     }
-    public String getTitle() {
+    public String getTitle(){
         return title;
     }
-    public List<String> getTranslator() {
+    public List<String> getTranslator(){
         return translator;
     }
 }

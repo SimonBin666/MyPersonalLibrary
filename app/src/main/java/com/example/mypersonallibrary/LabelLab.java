@@ -8,7 +8,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-public class LabelLab {
+public class LabelLab{
     private static final String TAG = "LabelLab";
     private static final String PreferenceName = "labels";
     private static LabelLab sLabelLab;
@@ -59,7 +59,7 @@ public class LabelLab {
     private void saveLabel(){
         Gson gson = new Gson();
         String toSave = gson.toJson(sLabel);
-        Log.i(TAG,"要加载的JSON= " + toSave);
+        Log.i(TAG,"要加载的JSON = " + toSave);
         LabelPreference.edit()
                 .putString(PreferenceName,toSave)
                 .apply();

@@ -20,10 +20,10 @@ public class BookListFragment extends Fragment{
     @Override
     public void onViewCreated(View view,Bundle savedInstanceState){
         super.onViewCreated(view,savedInstanceState);
-        actionAdd = (FloatingActionMenu) view.findViewById(R.id.fab_menu_add);
-        fab1 = (FloatingActionButton) view.findViewById(R.id.fab_menu_item_1);
+        actionAdd = (FloatingActionMenu)view.findViewById(R.id.fab_menu_add);
+        fab1 = (FloatingActionButton)view.findViewById(R.id.fab_menu_item_1);
         fab1.setOnClickListener(mOnClickListener);
-        fab2 = (FloatingActionButton) view.findViewById(R.id.fab_menu_item_2);
+        fab2 = (FloatingActionButton)view.findViewById(R.id.fab_menu_item_2);
         fab2.setOnClickListener(mOnClickListener);
     }
     private View.OnClickListener mOnClickListener = new View.OnClickListener(){
@@ -31,11 +31,11 @@ public class BookListFragment extends Fragment{
         public void onClick (View v){
             switch (v.getId()){
                 case R.id.fab_menu_item_1:
-                    Log.i(TAG,"fab menu item 1 clicked");
+                    Log.i(TAG,"fab菜单项1单击");
                     actionAdd.close(true);
                     break;
                 case R.id.fab_menu_item_2:
-                    Log.i(TAG,"fab menu item 2 clicked");
+                    Log.i(TAG,"fab菜单项2单击");
                     actionAdd.close(true);
                     break;
                 default:

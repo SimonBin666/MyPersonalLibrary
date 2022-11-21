@@ -52,36 +52,36 @@ public class BookEditActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookedit);
         Intent i = getIntent();
-        mBook = (Book) i.getSerializableExtra(BOOK);
+        mBook = (Book)i.getSerializableExtra(BOOK);
         mBookEditActivity = this;
-        mToolbar = (Toolbar) findViewById(R.id.bookedit_toolbar);
+        mToolbar = (Toolbar)findViewById(R.id.bookedit_toolbar);
         mToolbar.setTitle(R.string.book_edit_activity_title);
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationIcon(R.drawable.ic_close);
         mToolbar.setNavigationContentDescription(R.string.tool_bar_navigation_description);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
+            public void onClick(View view){
                 finish();
             }
         });
-        coverImageView = (ImageView) findViewById(R.id.book_cover_image_view);
+        coverImageView = (ImageView)findViewById(R.id.book_cover_image_view);
         if(i.getBooleanExtra(downloadCover,false)){
             CoverDownloader coverDownloader = new CoverDownloader(this,mBook);
             String path = getExternalFilesDir(Environment.DIRECTORY_PICTURES)+ "/" + mBook.getCoverPhotoFileName();
             coverDownloader.downloadAndSaveImg(i.getStringExtra(imageURL),path);
         }
         setBookInfo();
-        readingStatusSpinner = (Spinner) findViewById(R.id.reading_status_spinner);
+        readingStatusSpinner = (Spinner)findViewById(R.id.reading_status_spinner);
         setReadingStatus();
-        bookshelfSpinner = (Spinner) findViewById(R.id.book_shelf_spinner);
+        bookshelfSpinner = (Spinner)findViewById(R.id.book_shelf_spinner);
         setBookShelf();
-        notesEditText = (EditText) findViewById(R.id.book_notes_edit_text);
+        notesEditText = (EditText)findViewById(R.id.book_notes_edit_text);
         if(mBook.getNotes()!=null){
             notesEditText.setText(mBook.getNotes());
         }
 
-        websiteEditText = (EditText) findViewById(R.id.book_website_edit_text);
+        websiteEditText = (EditText)findViewById(R.id.book_website_edit_text);
         if(mBook.getWebsite()!=null){
             websiteEditText.setText(mBook.getWebsite());
         }
@@ -102,14 +102,14 @@ public class BookEditActivity extends AppCompatActivity{
         }
     }
     private void setBookInfo(){
-        titleEditText = (EditText) findViewById(R.id.book_title_edit_text);
-        authorEditText = (EditText) findViewById(R.id.book_author_edit_text);
-        translatorEditText = (EditText) findViewById(R.id.book_translator_edit_text);
-        publisherEditText = (EditText) findViewById(R.id.book_publisher_edit_text);
-        pubyearEditText = (EditText) findViewById(R.id.book_pubyear_edit_text);
-        pubmonthEditText = (EditText) findViewById(R.id.book_pubmonth_edit_text);
-        isbnEditText = (EditText) findViewById(R.id.book_isbn_edit_text);
-        translator_layout = (LinearLayout) findViewById(R.id.translator_layout);
+        titleEditText = (EditText)findViewById(R.id.book_title_edit_text);
+        authorEditText = (EditText)findViewById(R.id.book_author_edit_text);
+        translatorEditText = (EditText)findViewById(R.id.book_translator_edit_text);
+        publisherEditText = (EditText)findViewById(R.id.book_publisher_edit_text);
+        pubyearEditText = (EditText)findViewById(R.id.book_pubyear_edit_text);
+        pubmonthEditText = (EditText)findViewById(R.id.book_pubmonth_edit_text);
+        isbnEditText = (EditText)findViewById(R.id.book_isbn_edit_text);
+        translator_layout = (LinearLayout)findViewById(R.id.translator_layout);
         titleEditText.setText(mBook.getTitle());
         if(mBook.getAuthors()!=null){
             StringBuilder stringBuilder1 = new StringBuilder();
@@ -168,9 +168,9 @@ public class BookEditActivity extends AppCompatActivity{
                     /*MaterialDialog inputDialog = new MaterialDialog.Builder(mBookEditActivity)
                             .title(R.string.custom_book_shelf_dialog_title)
                             .inputRange(1,10)
-                            .input(R.string.custom_book_shelf_dialog_edit_text,0,new MaterialDialog.InputCallback() {
+                            .input(R.string.custom_book_shelf_dialog_edit_text,0,new MaterialDialog.InputCallback(){
                                 @Override
-                                public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+                                public void onInput(@NonNull MaterialDialog dialog, CharSequence input){
                                     BookShelf bookShelf = new BookShelf();
                                     bookShelf.setTitle(input.toString());
                                     bookShelfLab.addBookShelf(bookShelf);
@@ -179,9 +179,9 @@ public class BookEditActivity extends AppCompatActivity{
                                     setBookShelf();
                                 }
                             })
-                            .dismissListener(new DialogInterface.OnDismissListener() {
+                            .dismissListener(new DialogInterface.OnDismissListener(){
                                 @Override
-                                public void onDismiss(DialogInterface dialogInterface) {
+                                public void onDismiss(DialogInterface dialogInterface){
                                     bookshelfSpinner.setSelection(curBookshelfPos);
                                 }
                             })
@@ -191,9 +191,9 @@ public class BookEditActivity extends AppCompatActivity{
                     editText.setHint(R.string.custom_book_shelf_dialog_edit_text);
                     builder.setTitle(R.string.custom_book_shelf_dialog_title);
                     builder.setView(editText);
-                    builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
                         @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
+                        public void onClick(DialogInterface dialogInterface, int i){
                             BookShelf bookShelf = new BookShelf();
                             bookShelf.setTitle(editText.getText().toString());
                             bookShelfLab.addBookShelf(bookShelf);
@@ -202,7 +202,7 @@ public class BookEditActivity extends AppCompatActivity{
                             setBookShelf();
                         }
                     });
-                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener(){
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i){
                             bookshelfSpinner.setSelection(curBookshelfPos);
@@ -212,15 +212,15 @@ public class BookEditActivity extends AppCompatActivity{
                     alertDialog.show();
                     final Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
                     positiveButton.setEnabled(false);
-                    editText.addTextChangedListener(new TextWatcher() {
+                    editText.addTextChangedListener(new TextWatcher(){
                         @Override
-                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2){
                         }
                         @Override
-                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2){
                         }
                         @Override
-                        public void afterTextChanged(Editable editable) {
+                        public void afterTextChanged(Editable editable){
                             if(editable.toString().length()==0){
                                 positiveButton.setEnabled(false);
                             }
@@ -231,7 +231,7 @@ public class BookEditActivity extends AppCompatActivity{
                     });
                     alertDialog.setOnKeyListener(new DialogInterface.OnKeyListener(){
                         @Override
-                        public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
+                        public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent){
                             if(i == KeyEvent.KEYCODE_BACK){
                                 bookshelfSpinner.setSelection(curBookshelfPos);
                                 dialogInterface.dismiss();
@@ -256,14 +256,14 @@ public class BookEditActivity extends AppCompatActivity{
         readingStatusArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         readingStatusSpinner.setAdapter(readingStatusArrayAdapter);
         readingStatusSpinner.setSelection(mBook.getReadingStatus());
-        readingStatusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        readingStatusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l){
                 mBook.setReadingStatus(i);
                 Log.i(TAG,"单击并设置阅读状态" + i);
             }
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onNothingSelected(AdapterView<?> adapterView){
             }
         });
     }

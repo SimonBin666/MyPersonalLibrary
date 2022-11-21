@@ -1,5 +1,5 @@
 package com.example.mypersonallibrary.database;
-public class BookDBSchema {
+public class BookDBSchema{
     public static final class BookTable{
         public static final String NAME = "Books";
         public static final class Cols{

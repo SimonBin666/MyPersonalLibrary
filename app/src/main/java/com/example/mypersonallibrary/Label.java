@@ -13,13 +13,13 @@ public class Label {
     public String toString(){
         return title;
     }
-    public UUID getId() {
+    public UUID getId(){
         return id;
     }
-    public String getTitle() {
+    public String getTitle(){
         return title;
     }
-    public void setTitle(String title) {
+    public void setTitle(String title){
         this.title = title;
     }
 }

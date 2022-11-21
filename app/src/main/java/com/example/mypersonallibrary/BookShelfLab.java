@@ -21,7 +21,7 @@ public class BookShelfLab {
         }
         return sBookShelfLab;
     }
-    public BookShelfLab(Context context) {
+    public BookShelfLab(Context context){
         mContext = context.getApplicationContext();
         BookShelfPreference = mContext.getSharedPreferences(PreferenceName, 0);
         loadBookShelf();
@@ -32,7 +32,7 @@ public class BookShelfLab {
         String toLoad = BookShelfPreference.getString(PreferenceName,null);
         if(toLoad != null){
             sBookShelf = gson.fromJson(toLoad,type);
-            Log.i(TAG,"JSON to Load = " + toLoad);
+            Log.i(TAG,"加载的JSON = " + toLoad);
         }
         else{
             BookShelf bookShelf = new BookShelf(
@@ -62,7 +62,7 @@ public class BookShelfLab {
     private void saveBookShelf(){
         Gson gson = new Gson();
         String toSave = gson.toJson(sBookShelf);
-        Log.i(TAG,"JSON to Save = " + toSave);
+        Log.i(TAG,"加载的JSON = " + toSave);
         BookShelfPreference.edit()
                 .putString(PreferenceName,toSave)
                 .apply();
