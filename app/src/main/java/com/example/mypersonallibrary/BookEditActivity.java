@@ -24,7 +24,7 @@ import java.util.List;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-//import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.MaterialDialog;
 import java.util.Calendar;
 public class BookEditActivity extends AppCompatActivity{
     private static final String TAG = "BookEditActivity";
@@ -165,7 +165,7 @@ public class BookEditActivity extends AppCompatActivity{
                 String selectedName = selectedBS.toString();
                 if(selectedName.equals(getResources().getString(R.string.custom_spinner_item))){
                     Log.i(TAG,"点击自定义书架");
-                    /*MaterialDialog inputDialog = new MaterialDialog.Builder(mBookEditActivity)
+                    MaterialDialog inputDialog = new MaterialDialog.Builder(mBookEditActivity)
                             .title(R.string.custom_book_shelf_dialog_title)
                             .inputRange(1,10)
                             .input(R.string.custom_book_shelf_dialog_edit_text,0,new MaterialDialog.InputCallback(){
@@ -186,7 +186,7 @@ public class BookEditActivity extends AppCompatActivity{
                                 }
                             })
                             .show();
-                    AlertDialog.Builder builder = new AlertDialog.Builder(mBookEditActivity);
+                    /*AlertDialog.Builder builder = new AlertDialog.Builder(mBookEditActivity);
                     final EditText editText = new EditText(mBookEditActivity);
                     editText.setHint(R.string.custom_book_shelf_dialog_edit_text);
                     builder.setTitle(R.string.custom_book_shelf_dialog_title);

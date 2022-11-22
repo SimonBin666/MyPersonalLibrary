@@ -3,12 +3,12 @@ plugins {
 }
 
 android {
-    compileSdk 33
-
+    compileSdkVersion project.CompileSdkVersion
+    buildToolsVersion project.BuildToolsVersion
     defaultConfig {
         applicationId "com.example.mypersonallibrary"
-        minSdk 33
-        targetSdk 33
+        minSdkVersion 21
+        targetSdkVersion project.TargetSdkVersion
         versionCode 1
         versionName "1.0"
 
@@ -30,7 +30,7 @@ android {
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'com.google.android.material:material:1.2.1'
      'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
@@ -38,4 +38,5 @@ dependencies {
     implementation 'com.github.clans:fab:1.6.4'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
 }
