@@ -1,16 +1,8 @@
 package com.example.mypersonallibrary;
 import android.content.Context;
-import androidx.annotation.NonNull;
 import android.util.Log;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -21,7 +13,11 @@ import retrofit2.http.Path;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
-import java.io.FileInputStream;
+import android.app.Activity;
+import android.content.DialogInterface;
+import androidx.annotation.NonNull;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 public class DouBanFetcher extends BookFetcher{
     private static final String TAG = "DoubanFetcher";
     @Override
@@ -60,21 +56,17 @@ public class DouBanFetcher extends BookFetcher{
                     if(mBook.getWebIds() == null){
                         mBook.setWebIds(new HashMap<String, String>());
                     }
-                    mBook.getWebIds().put("douban",response.body().getId());
+                    mBook.getWebIds().put("豆瓣",response.body().getId());
                     mBook.setAddTime(Calendar.getInstance());
                     String rawDate = response.body().getPubdate();
                     Log.i(TAG,"生日期 = " + rawDate);
-                    int firstSplit  = rawDate.indexOf("-");
-                    int lastSplit = rawDate.lastIndexOf("-");
-                    String year = rawDate.substring(0,firstSplit);
-                    if(firstSplit == lastSplit){
-                        lastSplit = rawDate.length();
-                    }
-                    String month = rawDate.substring(firstSplit+1,lastSplit);
-                    Log.i(TAG,"第一 = " + firstSplit + "，第二 = " + lastSplit + "，月 = " + month + "，年 = " + year);
+                    String[] date = rawDate.split("-");
+                    String year = date[0];
+                    String month = date[1];
+                    Log.i(TAG,"获取PubDate年份 = " + year + "，月 = " + month);
                     Calendar calendar = Calendar.getInstance();
                     calendar.set(Integer.parseInt(year),Integer.parseInt(month)-1,1);
-                    mBook.setPubtime(calendar);
+                    mBook.setPubTime(calendar);
                     final String imageURL = response.body().getImages().getLarge();
                     mHandler.post(new Runnable(){
                         @Override
@@ -84,16 +76,60 @@ public class DouBanFetcher extends BookFetcher{
                             i.putExtra(BookEditActivity.downloadCover,true);
                             i.putExtra(BookEditActivity.imageURL,imageURL);
                             mContext.startActivity(i);
+                            ((Activity)mContext).finish();
                         }
                     });
                 }
                 else{
                     Log.w(TAG,"意外的响应代码" + response.code() + "，isbn = " + isbn);
+                    String dialogCotent = String.format(mContext.getResources().getString(
+                            R.string.isbn_unmatched_dialog_content),isbn);
+                    MaterialDialog dialog = new MaterialDialog.Builder(mContext)
+                            .title(R.string.isbn_unmatched_dialog_title)
+                            .content(dialogCotent)
+                            .positiveText(R.string.isbn_unmatched_dialog_positive)
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    //create a book only with isbn
+                                    mBook = new Book();
+                                    mBook.setIsbn(isbn);
+                                    mBook.setAddTime(Calendar.getInstance());
+                                    Intent i = new Intent(mContext,BookEditActivity.class);
+                                    i.putExtra(BookEditActivity.BOOK,mBook);
+                                    i.putExtra(BookEditActivity.downloadCover,false);
+                                    mContext.startActivity(i);
+                                    ((Activity)mContext).finish();
+
+                                }
+                            })
+                            .show();
                 }
             }
             @Override
             public void onFailure(Call<DouBanJson> call, Throwable t) {
                 Log.w(TAG,"获取豆瓣信息失败，" + t.toString());
+                String dialogCotent = String.format(mContext.getResources().getString(
+                        R.string.request_failed_dialog_content),isbn);
+                MaterialDialog dialog = new MaterialDialog.Builder(mContext)
+                        .title(R.string.isbn_unmatched_dialog_title)
+                        .content(dialogCotent)
+                        .positiveText(R.string.isbn_unmatched_dialog_positive)
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                mBook = new Book();
+                                mBook.setIsbn(isbn);
+                                mBook.setAddTime(Calendar.getInstance());
+                                Intent i = new Intent(mContext,BookEditActivity.class);
+                                i.putExtra(BookEditActivity.BOOK,mBook);
+                                i.putExtra(BookEditActivity.downloadCover,false);
+                                mContext.startActivity(i);
+                                ((Activity)mContext).finish();
+
+                            }
+                        })
+                        .show();
             }
         });
     }

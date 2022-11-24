@@ -1,11 +1,9 @@
 package com.example.mypersonallibrary;
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import android.util.Log;
 import java.util.ArrayList;
 public class Book implements Serializable{
     private String title;
@@ -14,7 +12,7 @@ public class Book implements Serializable{
     private List<String> translators;
     private Map<String,String> WebIds;
     private String publisher;
-    private Calendar pubtime;
+    private Calendar pubTime;
     private Calendar addTime;
     private String isbn;
     private boolean hasCover;
@@ -64,11 +62,11 @@ public class Book implements Serializable{
     public void setPublisher(String publisher){
         this.publisher = publisher;
     }
-    public Calendar getPubtime(){
-        return pubtime;
+    public Calendar getPubTime(){
+        return pubTime;
     }
-    public void setPubtime(Calendar pubtime){
-        this.pubtime = pubtime;
+    public void setPubTime(Calendar pubtime){
+        this.pubTime = pubtime;
     }
     public String getTitle(){
         return title;
@@ -137,5 +135,8 @@ public class Book implements Serializable{
         if(labelID!=null){
             labelID.remove(labelid);
         }
+    }
+    public void setLabelID(List<UUID> labelID) {
+        this.labelID = labelID;
     }
 }

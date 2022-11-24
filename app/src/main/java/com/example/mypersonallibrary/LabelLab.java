@@ -14,7 +14,7 @@ public class LabelLab{
     private static LabelLab sLabelLab;
     private SharedPreferences LabelPreference;
     private Context mContext;
-    private static List<Label> sLabel;
+    private List<Label> sLabel;
     public static LabelLab get(Context context){
         if(sLabelLab ==null){
             sLabelLab = new LabelLab(context);

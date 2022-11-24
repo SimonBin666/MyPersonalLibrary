@@ -1,9 +1,11 @@
 package com.example.mypersonallibrary;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import androidx.appcompat.widget.Toolbar;
@@ -26,6 +28,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import com.afollestad.materialdialogs.MaterialDialog;
 import java.util.Calendar;
+import android.content.Context;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
+import java.util.Arrays;
 public class BookEditActivity extends AppCompatActivity{
     private static final String TAG = "BookEditActivity";
     public static String BOOK ="BOOKTOEDIT";
@@ -96,7 +102,49 @@ public class BookEditActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.menu_book_edit_save:
-                finish();
+                int month = Integer.parseInt(pubmonthEditText.getText().toString());
+                if(month>12 || month <1){
+                    Toast.makeText(this,R.string.month_invalid,Toast.LENGTH_LONG).show();
+                    pubmonthEditText.requestFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(pubmonthEditText,InputMethodManager.SHOW_IMPLICIT);
+                }
+                else{
+                    mBook.setTitle(titleEditText.getText().toString());
+                    String authors = authorEditText.getText().toString();
+                    String[] authorArray;
+                    if(authors.contains("、")){
+                        authorArray = authors.split("、");
+                    }
+                    else {
+                        authorArray = authors.split(" ");
+                    }
+                    List<String> authorList = new ArrayList<>(Arrays.asList(authorArray));
+                    mBook.setAuthors(authorList);
+                    if(translator_layout.getVisibility()!= View.GONE){
+                        String translators = translatorEditText.getText().toString();
+                        String[] translatorArray;
+                        if(translators.contains("、")){
+                            translatorArray = translators.split("、");
+                        }
+                        else {
+                            translatorArray = translators.split(" ");
+                        }
+                        List<String> translatorList = new ArrayList<>(Arrays.asList(translatorArray));
+                        mBook.setTranslators(translatorList);
+                    }
+                    mBook.setPublisher(publisherEditText.getText().toString());
+                    int year = Integer.parseInt(pubyearEditText.getText().toString());
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(year, month, 1);
+                    mBook.setPubTime(calendar);
+                    mBook.setIsbn(isbnEditText.getText().toString());
+                    mBook.setNotes(notesEditText.getText().toString());
+                    mBook.setWebsite(notesEditText.getText().toString());
+                    BookLab bookLab = BookLab.get(this);
+                    bookLab.addBook(mBook);
+                    finish();
+                }
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -117,7 +165,9 @@ public class BookEditActivity extends AppCompatActivity{
                 stringBuilder1.append(author);
                 stringBuilder1.append(" ");
             }
-            authorEditText.setText(stringBuilder1.toString());
+            stringBuilder1.deleteCharAt(stringBuilder1.length()-1);
+            String authors = stringBuilder1.toString();
+            authorEditText.setText(authors.substring(0,authors.length()-1));
         }
         if(mBook.getTranslators()!=null){
             translator_layout.setVisibility(View.VISIBLE);
@@ -126,12 +176,14 @@ public class BookEditActivity extends AppCompatActivity{
                 stringBuilder2.append(translator);
                 stringBuilder2.append(" ");
             }
-            translatorEditText.setText(stringBuilder2.toString());
+            stringBuilder2.deleteCharAt(stringBuilder2.length()-1);
+            String translators = stringBuilder2.toString();
+            translatorEditText.setText(translators.substring(0,translators.length()-1));
         }
         publisherEditText.setText(mBook.getPublisher());
         isbnEditText.setText(mBook.getIsbn());
-        int year = mBook.getPubtime().get(Calendar.YEAR);
-        int mon = mBook.getPubtime().get(Calendar.MONTH) + 1;
+        int year = mBook.getPubTime().get(Calendar.YEAR);
+        int mon = mBook.getPubTime().get(Calendar.MONTH) + 1;
         StringBuilder month = new StringBuilder();
         if(mon < 10){
             month.append("0");
@@ -175,7 +227,7 @@ public class BookEditActivity extends AppCompatActivity{
                                     bookShelf.setTitle(input.toString());
                                     bookShelfLab.addBookShelf(bookShelf);
                                     mBook.setBookshelfID(bookShelf.getId());
-                                    Log.i(TAG,"New and set Bookshelf = " +bookShelf.getTitle());
+                                    Log.i(TAG,"新设书架 = " +bookShelf.getTitle());
                                     setBookShelf();
                                 }
                             })
@@ -186,7 +238,7 @@ public class BookEditActivity extends AppCompatActivity{
                                 }
                             })
                             .show();
-                    /*AlertDialog.Builder builder = new AlertDialog.Builder(mBookEditActivity);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mBookEditActivity);
                     final EditText editText = new EditText(mBookEditActivity);
                     editText.setHint(R.string.custom_book_shelf_dialog_edit_text);
                     builder.setTitle(R.string.custom_book_shelf_dialog_title);
@@ -239,7 +291,7 @@ public class BookEditActivity extends AppCompatActivity{
                             return true;
                         }
                     });
-                */}
+                }
                 else{
                     Log.i(TAG,"设置书架" + selectedBS.getTitle());
                     curBookshelfPos = pos;

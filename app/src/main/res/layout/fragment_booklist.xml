@@ -4,15 +4,17 @@
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:id="@+id/booklist_fragment_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:hardwareAccelerated="true">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/booklist_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="This is Fragment1"/>
+        android:layout_height="match_parent"/>
 
 
     <com.github.clans.fab.FloatingActionMenu
+        android:hardwareAccelerated="true"
         android:id="@+id/fab_menu_add"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -37,7 +39,8 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_edit"
             fab:fab_label="@string/fab_menu_2"
-            fab:fab_size="mini" />
+            fab:fab_size="mini"
+            android:hardwareAccelerated="false"/>
 
 
     </com.github.clans.fab.FloatingActionMenu>

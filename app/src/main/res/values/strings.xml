@@ -42,6 +42,14 @@
     <string name="custom_book_shelf_dialog_edit_text">书架名称</string>
     <string name="custom_book_shelf_dialog_title">定制书架</string>
     <string name="default_book_shelf_name">默认书架</string>
-    <string name="book_edit_activity_title">编辑书籍</string>
+    <string name="book_edit_activity_title">编辑书籍细节</string>
     <string name="book_edit_menu_save">保存</string>
+    <string name="month_invalid">月份应该是1到12之间的数字！</string>
+    <string name="isbn_unmatched_dialog_title">获取信息失败</string>
+    <string name="isbn_unmatched_dialog_positive">无论如何添加它</string>
+    <string name="isbn_unmatched_dialog_content">您图书的ISBN为%1$s,我们未能从 Web 服务中获取详细信息.请检查 ISBN。\n
+         您想以任何方式添加它吗？</string>
+    <string name="request_failed_dialog_content">您图书的ISBN为%1$s，我们无法连接到Web服务.请检查网络。\n
+         您想以任何方式添加它吗？</string>
+    <string name="pubdate_unset">未设置</string>
 </resources>
