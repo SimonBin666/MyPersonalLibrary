@@ -47,9 +47,25 @@
     <string name="month_invalid">月份应该是1到12之间的数字！</string>
     <string name="isbn_unmatched_dialog_title">获取信息失败</string>
     <string name="isbn_unmatched_dialog_positive">无论如何添加它</string>
-    <string name="isbn_unmatched_dialog_content">您图书的ISBN为%1$s,我们未能从 Web 服务中获取详细信息.请检查 ISBN。\n
+    <string name="isbn_unmatched_dialog_content">您图书的ISBN为%1$s,我们未能从Web服务中获取详细信息.请检查ISBN。\n
          您想以任何方式添加它吗？</string>
-    <string name="request_failed_dialog_content">您图书的ISBN为%1$s，我们无法连接到Web服务.请检查网络。\n
+    <string name="request_failed_dialog_content">您图书的ISBN为%1$s我们无法连接到Web服务.请检查网络。\n
          您想以任何方式添加它吗？</string>
     <string name="pubdate_unset">未设置</string>
+    <string name="multi_menu_item_delete">删除</string>
+    <string name="multi_title">选择%1$d本书</string>
+    <string name="multi_menu_item_select_all">全选</string>
+    <plurals name="multi_title">
+        <item quantity="one">选择%1$d本书</item>
+        <item quantity="other">选择%1$d本书</item>
+    </plurals>
+    <string name="single_add_toolbar"></string>
+    <string name="input_isbn_manually_title">手动添加</string>
+    <string name="input_isbn_manually_content">请在EditText中输入您的书的isbn（10位或13位）。</string>
+    <string name="input_isbn_manually_edit_text">图书的ISBN</string>
+    <string name="input_isbn_manually_positive">添加</string>
+    <string name="menu_single_add_manually">手动输入ISBN</string>
+    <string name="book_duplicate_dialog_title">书还在</string>
+    <string name="book_duplicate_dialog_content">这本书还在你的书架上。还是要添加吗？</string>
+    <string name="book_duplicate_dialog_positive">无论如何添加它</string>
 </resources>

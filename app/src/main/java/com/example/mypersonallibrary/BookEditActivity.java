@@ -32,6 +32,7 @@ import android.content.Context;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 import java.util.Arrays;
+import java.util.UUID;
 public class BookEditActivity extends AppCompatActivity{
     private static final String TAG = "BookEditActivity";
     public static String BOOK ="BOOKTOEDIT";
@@ -143,6 +144,9 @@ public class BookEditActivity extends AppCompatActivity{
                     mBook.setWebsite(notesEditText.getText().toString());
                     BookLab bookLab = BookLab.get(this);
                     bookLab.addBook(mBook);
+                    for(int i=0;i<30;i++){
+                        bookLab.addBook(mBook);
+                    }
                     finish();
                 }
             default:
@@ -166,8 +170,7 @@ public class BookEditActivity extends AppCompatActivity{
                 stringBuilder1.append(" ");
             }
             stringBuilder1.deleteCharAt(stringBuilder1.length()-1);
-            String authors = stringBuilder1.toString();
-            authorEditText.setText(authors.substring(0,authors.length()-1));
+            authorEditText.setText(stringBuilder1);
         }
         if(mBook.getTranslators()!=null){
             translator_layout.setVisibility(View.VISIBLE);
@@ -177,8 +180,7 @@ public class BookEditActivity extends AppCompatActivity{
                 stringBuilder2.append(" ");
             }
             stringBuilder2.deleteCharAt(stringBuilder2.length()-1);
-            String translators = stringBuilder2.toString();
-            translatorEditText.setText(translators.substring(0,translators.length()-1));
+            translatorEditText.setText(stringBuilder2);
         }
         publisherEditText.setText(mBook.getPublisher());
         isbnEditText.setText(mBook.getIsbn());
