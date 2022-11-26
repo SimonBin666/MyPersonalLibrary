@@ -22,12 +22,13 @@ public class Book implements Serializable{
     private String website;
     private List<UUID> labelID;
     public Book(){
-        id = UUID.randomUUID();
-        bookshelfID = UUID.fromString("407c4479-5a57-4371-8b94-ad038f1276fe");
-        readingStatus = 0;
+        this(UUID.randomUUID());
     }
     public Book(UUID uuid){
         id = uuid;
+        bookshelfID = UUID.fromString("407c4479-5a57-4371-8b94-ad038f1276fe");
+        readingStatus = 0;
+        addTime = Calendar.getInstance();
     }
     public String getCoverPhotoFileName(){
         return "Cover_"+id.toString()+".jpg";

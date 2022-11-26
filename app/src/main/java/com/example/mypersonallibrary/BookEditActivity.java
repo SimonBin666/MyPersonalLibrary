@@ -26,6 +26,7 @@ import java.util.List;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import java.util.Calendar;
 import android.content.Context;
@@ -78,6 +79,11 @@ public class BookEditActivity extends AppCompatActivity{
             String path = getExternalFilesDir(Environment.DIRECTORY_PICTURES)+ "/" + mBook.getCoverPhotoFileName();
             coverDownloader.downloadAndSaveImg(i.getStringExtra(imageURL),path);
         }
+        else if(mBook.isHasCover()){
+            String path = getExternalFilesDir(Environment.DIRECTORY_PICTURES)+ "/" + mBook.getCoverPhotoFileName();
+            Bitmap src = BitmapFactory.decodeFile(path);
+            coverImageView.setImageBitmap(src);
+        }
         setBookInfo();
         readingStatusSpinner = (Spinner)findViewById(R.id.reading_status_spinner);
         setReadingStatus();
@@ -87,7 +93,6 @@ public class BookEditActivity extends AppCompatActivity{
         if(mBook.getNotes()!=null){
             notesEditText.setText(mBook.getNotes());
         }
-
         websiteEditText = (EditText)findViewById(R.id.book_website_edit_text);
         if(mBook.getWebsite()!=null){
             websiteEditText.setText(mBook.getWebsite());
@@ -101,9 +106,15 @@ public class BookEditActivity extends AppCompatActivity{
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
+        switch(item.getItemId()){
             case R.id.menu_book_edit_save:
-                int month = Integer.parseInt(pubmonthEditText.getText().toString());
+                int month;
+                if(pubmonthEditText.getText().length()== 0){
+                    month = 1;
+                }
+                else{
+                    month = Integer.parseInt(pubmonthEditText.getText().toString());
+                }
                 if(month>12 || month <1){
                     Toast.makeText(this,R.string.month_invalid,Toast.LENGTH_LONG).show();
                     pubmonthEditText.requestFocus();
@@ -117,7 +128,7 @@ public class BookEditActivity extends AppCompatActivity{
                     if(authors.contains("、")){
                         authorArray = authors.split("、");
                     }
-                    else {
+                    else{
                         authorArray = authors.split(" ");
                     }
                     List<String> authorList = new ArrayList<>(Arrays.asList(authorArray));
@@ -127,17 +138,26 @@ public class BookEditActivity extends AppCompatActivity{
                         String[] translatorArray;
                         if(translators.contains("、")){
                             translatorArray = translators.split("、");
-                        }
-                        else {
+                        }else {
                             translatorArray = translators.split(" ");
                         }
                         List<String> translatorList = new ArrayList<>(Arrays.asList(translatorArray));
                         mBook.setTranslators(translatorList);
                     }
+                    else{
+                        List<String> list = new ArrayList<>();
+                        mBook.setTranslators(list);
+                    }
                     mBook.setPublisher(publisherEditText.getText().toString());
-                    int year = Integer.parseInt(pubyearEditText.getText().toString());
+                    int year;
+                    if(pubyearEditText.getText().toString().length() == 0){
+                        year = 9999;
+                    }
+                    else{
+                        year = Integer.parseInt(pubyearEditText.getText().toString());
+                    }
                     Calendar calendar = Calendar.getInstance();
-                    calendar.set(year, month, 1);
+                    calendar.set(year, month-1, 1);
                     mBook.setPubTime(calendar);
                     mBook.setIsbn(isbnEditText.getText().toString());
                     mBook.setNotes(notesEditText.getText().toString());
@@ -163,7 +183,7 @@ public class BookEditActivity extends AppCompatActivity{
         isbnEditText = (EditText)findViewById(R.id.book_isbn_edit_text);
         translator_layout = (LinearLayout)findViewById(R.id.translator_layout);
         titleEditText.setText(mBook.getTitle());
-        if(mBook.getAuthors()!=null){
+        if(mBook.getAuthors()!=null && mBook.getAuthors().size()!=0){
             StringBuilder stringBuilder1 = new StringBuilder();
             for(String author: mBook.getAuthors()){
                 stringBuilder1.append(author);
@@ -172,7 +192,7 @@ public class BookEditActivity extends AppCompatActivity{
             stringBuilder1.deleteCharAt(stringBuilder1.length()-1);
             authorEditText.setText(stringBuilder1);
         }
-        if(mBook.getTranslators()!=null){
+        if(mBook.getTranslators()!=null && mBook.getAuthors().size()!=0){
             translator_layout.setVisibility(View.VISIBLE);
             StringBuilder stringBuilder2 = new StringBuilder();
             for(String translator: mBook.getTranslators()){
@@ -183,33 +203,37 @@ public class BookEditActivity extends AppCompatActivity{
             translatorEditText.setText(stringBuilder2);
         }
         publisherEditText.setText(mBook.getPublisher());
-        isbnEditText.setText(mBook.getIsbn());
-        int year = mBook.getPubTime().get(Calendar.YEAR);
-        int mon = mBook.getPubTime().get(Calendar.MONTH) + 1;
-        StringBuilder month = new StringBuilder();
-        if(mon < 10){
-            month.append("0");
+        if(mBook.getPubTime()!=null){
+            int year = mBook.getPubTime().get(Calendar.YEAR);
+            int mon = mBook.getPubTime().get(Calendar.MONTH) + 1;
+            StringBuilder month = new StringBuilder();
+            if(mon < 10){
+                month.append("0");
+            }
+            month.append(String.valueOf(mon));
+            pubyearEditText.setText(String.valueOf(year));
+            pubmonthEditText.setText(month);
         }
-        month.append(String.valueOf(mon));
-        pubyearEditText.setText(String.valueOf(year));
-        pubmonthEditText.setText(month);
+        isbnEditText.setText(mBook.getIsbn());
     }
     private int curBookshelfPos;
     private void setBookShelf(){
         final BookShelfLab bookShelfLab = BookShelfLab.get(this);
         final List<BookShelf> bookShelves = bookShelfLab.getBookShelves();
-        List<BookShelf> spinnerBookshelf = new ArrayList<>();
-        for(BookShelf bookShelfTemp : bookShelves){
-            spinnerBookshelf.add(bookShelfTemp);
-        }
         final ArrayAdapter<BookShelf> arrayAdapter = new ArrayAdapter<BookShelf>(
-                this,R.layout.spinner_item,spinnerBookshelf);
+                this,R.layout.spinner_item,bookShelves);
         BookShelf customShelf = new BookShelf();
         customShelf.setTitle(getResources().getString(R.string.custom_spinner_item));
         arrayAdapter.add(customShelf);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         bookshelfSpinner.setAdapter(arrayAdapter);
-        BookShelf curBookshelf = bookShelfLab.getBookShelf(mBook.getBookshelfID());
+        BookShelf curBookshelf = bookShelves.get(0);
+        for(BookShelf bookShelf: bookShelves){
+            if(bookShelf.getId().equals(mBook.getBookshelfID())){
+                curBookshelf = bookShelf;
+                break;
+            }
+        }
         curBookshelfPos = arrayAdapter.getPosition(curBookshelf);
         bookshelfSpinner.setSelection(curBookshelfPos);
         bookshelfSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
@@ -222,43 +246,61 @@ public class BookEditActivity extends AppCompatActivity{
                     MaterialDialog inputDialog = new MaterialDialog.Builder(mBookEditActivity)
                             .title(R.string.custom_book_shelf_dialog_title)
                             .inputRange(1,10)
-                            .input(R.string.custom_book_shelf_dialog_edit_text,0,new MaterialDialog.InputCallback(){
+                            .input(R.string.custom_book_shelf_dialog_edit_text, 0, new MaterialDialog.InputCallback() {
                                 @Override
-                                public void onInput(@NonNull MaterialDialog dialog, CharSequence input){
+                                public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+                                }
+                            })
+                            .onPositive(new MaterialDialog.SingleButtonCallback(){
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                     BookShelf bookShelf = new BookShelf();
-                                    bookShelf.setTitle(input.toString());
+                                    if(dialog.getInputEditText().getText()!=null){
+                                        bookShelf.setTitle(dialog.getInputEditText().getText().toString());
+                                    }
+                                    else{
+                                        bookShelf.setTitle("");
+                                    }
                                     bookShelfLab.addBookShelf(bookShelf);
                                     mBook.setBookshelfID(bookShelf.getId());
                                     Log.i(TAG,"新设书架 = " +bookShelf.getTitle());
                                     setBookShelf();
                                 }
                             })
-                            .dismissListener(new DialogInterface.OnDismissListener(){
+                            .negativeText(android.R.string.cancel)
+                            .onNegative(new MaterialDialog.SingleButtonCallback() {
                                 @Override
-                                public void onDismiss(DialogInterface dialogInterface){
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    bookshelfSpinner.setSelection(curBookshelfPos);
+                                }
+                            })
+                            .dismissListener(new DialogInterface.OnDismissListener() {
+                                @Override
+                                public void onDismiss(DialogInterface dialogInterface) {
                                     bookshelfSpinner.setSelection(curBookshelfPos);
                                 }
                             })
                             .show();
+                    /* Default Dialog
                     AlertDialog.Builder builder = new AlertDialog.Builder(mBookEditActivity);
                     final EditText editText = new EditText(mBookEditActivity);
                     editText.setHint(R.string.custom_book_shelf_dialog_edit_text);
                     builder.setTitle(R.string.custom_book_shelf_dialog_title);
                     builder.setView(editText);
-                    builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+                    builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialogInterface, int i){
+                        public void onClick(DialogInterface dialogInterface, int i) {
                             BookShelf bookShelf = new BookShelf();
                             bookShelf.setTitle(editText.getText().toString());
                             bookShelfLab.addBookShelf(bookShelf);
                             mBook.setBookshelfID(bookShelf.getId());
-                            Log.i(TAG,"新设书架 = " +bookShelf.getTitle());
+                            Log.i(TAG,"New and set Bookshelf = " +bookShelf.getTitle());
                             setBookShelf();
                         }
                     });
-                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener(){
+                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialogInterface, int i){
+                        public void onClick(DialogInterface dialogInterface, int i) {
                             bookshelfSpinner.setSelection(curBookshelfPos);
                         }
                     });
@@ -266,26 +308,25 @@ public class BookEditActivity extends AppCompatActivity{
                     alertDialog.show();
                     final Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
                     positiveButton.setEnabled(false);
-                    editText.addTextChangedListener(new TextWatcher(){
+                    editText.addTextChangedListener(new TextWatcher() {
                         @Override
-                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2){
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                         }
                         @Override
-                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2){
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                         }
                         @Override
-                        public void afterTextChanged(Editable editable){
+                        public void afterTextChanged(Editable editable) {
                             if(editable.toString().length()==0){
                                 positiveButton.setEnabled(false);
-                            }
-                            else{
+                            }else{
                                 positiveButton.setEnabled(true);
                             }
                         }
                     });
-                    alertDialog.setOnKeyListener(new DialogInterface.OnKeyListener(){
+                    alertDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
                         @Override
-                        public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent){
+                        public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
                             if(i == KeyEvent.KEYCODE_BACK){
                                 bookshelfSpinner.setSelection(curBookshelfPos);
                                 dialogInterface.dismiss();
@@ -293,6 +334,7 @@ public class BookEditActivity extends AppCompatActivity{
                             return true;
                         }
                     });
+                    */
                 }
                 else{
                     Log.i(TAG,"设置书架" + selectedBS.getTitle());

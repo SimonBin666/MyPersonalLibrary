@@ -64,17 +64,15 @@ public class BookLab{
         return new BookCursorWrapper(cursor);
     }
     public Book getBook(UUID id){
-        BookCursorWrapper cursor = queryBooks(BookDBSchema.BookTable.Cols.UUID + "= ?",
-                new String[]{id.toString()});
-        try{
+        try (BookCursorWrapper cursor = queryBooks(
+                BookDBSchema.BookTable.Cols.UUID + " = ？",
+                new String[]{id.toString()})
+        ){
             if(cursor.getCount() == 0){
                 return null;
             }
             cursor.moveToFirst();
             return cursor.getBook();
-        }
-        finally {
-            cursor.close();
         }
     }
     public List<Book> getBooks(){
@@ -94,11 +92,33 @@ public class BookLab{
     }
     public void addBook(Book book){
         ContentValues values = getContentValues(book);
-        mDatabase.insert(BookDBSchema.BookTable.NAME,null,values);
+        if(isBookExists(book)){
+            mDatabase.update(
+                    BookDBSchema.BookTable.NAME,
+                    values,
+                    BookDBSchema.BookTable.Cols.UUID + "= ?",
+                    new String[]{book.getId().toString()}
+            );
+        }
+        else{
+            mDatabase.insert(BookDBSchema.BookTable.NAME,null,values);
+        }
     }
     public void deleteBook(Book book){
         String uuidString = book.getId().toString();
-        mDatabase.delete(BookDBSchema.BookTable.NAME,BookDBSchema.BookTable.Cols.UUID + " = ?",
-                new String[]{uuidString});
+        mDatabase.delete(
+                BookDBSchema.BookTable.NAME,
+                BookDBSchema.BookTable.Cols.UUID + " = ？",
+                new String[]{uuidString}
+        );
+    }
+    public boolean isBookExists(Book book){
+        try (BookCursorWrapper cursor = queryBooks(
+                BookDBSchema.BookTable.Cols.UUID + "= ？",
+                new String[]{book.getId().toString()})
+        ){
+            return cursor.getCount()!=0;
+        }
+
     }
 }

@@ -17,10 +17,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import android.os.Handler;
-public abstract class BookFetcher {
+public abstract class BookFetcher{
     private static final String TAG = "BookFetcher";
+    public static final int fetcherID_DB = 0;
     protected Context mContext;
     protected Book mBook;
     protected Handler mHandler;
-    protected abstract void getBookInfo(Context context, String isbn);
+    protected abstract void getBookInfo(Context context,String isbn,final int mode);
 }

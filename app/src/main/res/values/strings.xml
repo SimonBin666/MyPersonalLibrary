@@ -33,7 +33,7 @@
     <string name="book_pubyear_edit_text_hint">年</string>
     <string name="book_pubmonth_edit_text_hint">月</string>
     <string-array name="reading_status_array">
-        <item>选择阅读状态</item>
+        <item>状态未设置</item>
         <item>未读</item>
         <item>阅读</item>
         <item>阅读</item>
@@ -65,7 +65,16 @@
     <string name="input_isbn_manually_edit_text">图书的ISBN</string>
     <string name="input_isbn_manually_positive">添加</string>
     <string name="menu_single_add_manually">手动输入ISBN</string>
-    <string name="book_duplicate_dialog_title">书还在</string>
+    <string name="book_duplicate_dialog_title">书存在</string>
     <string name="book_duplicate_dialog_content">这本书还在你的书架上。还是要添加吗？</string>
     <string name="book_duplicate_dialog_positive">无论如何添加它</string>
+    <string name="book_info_title">信息</string>
+    <string name="book_info_title_image_view">标题</string>
+    <string name="book_info_author_image_view">作者</string>
+    <string name="book_info_translator_image_view">翻译人员</string>
+    <string name="book_info_publisher_image_view">出版商</string>
+    <string name="book_info_pubtime_image_view">发布日期</string>
+    <string name="book_info_isbn_image_view">ISBN</string>
+    <string name="book_detail_title">细节</string>
+    <string name="book_detail_header_text_view">您将这本书添加到</string>
 </resources>

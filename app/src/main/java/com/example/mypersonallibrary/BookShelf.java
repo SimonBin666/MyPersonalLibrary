@@ -1,6 +1,7 @@
 package com.example.mypersonallibrary;
 import java.util.UUID;
-public class BookShelf {
+import androidx.annotation.NonNull;
+public class BookShelf{
     private UUID id;
     private String title;
     public BookShelf(){

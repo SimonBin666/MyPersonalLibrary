@@ -19,9 +19,9 @@ import androidx.annotation.NonNull;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 public class DouBanFetcher extends BookFetcher{
-    private static final String TAG = "DoubanFetcher";
+    private static final String TAG = "DouBanFetcher";
     @Override
-    public void getBookInfo(final Context context, final String isbn){
+    public void getBookInfo(final Context context, final String isbn,final int mode){
         mContext = context;
         mHandler = new Handler(Looper.getMainLooper());
         Retrofit mRetrofit;
@@ -33,7 +33,7 @@ public class DouBanFetcher extends BookFetcher{
         Call<DouBanJson> call = api.getDBResult(isbn);
         call.enqueue(new Callback<DouBanJson>() {
             @Override
-            public void onResponse(Call<DouBanJson> call, Response<DouBanJson> response) {
+            public void onResponse(Call<DouBanJson> call, Response<DouBanJson> response){
                 if(response.code() == 200) {
                     Log.i(TAG, "获取豆瓣信息成功，id = " + response.body().getId()
                             +"，标题 = " + response.body().getTitle());
@@ -57,13 +57,12 @@ public class DouBanFetcher extends BookFetcher{
                         mBook.setWebIds(new HashMap<String, String>());
                     }
                     mBook.getWebIds().put("豆瓣",response.body().getId());
-                    mBook.setAddTime(Calendar.getInstance());
                     String rawDate = response.body().getPubdate();
                     Log.i(TAG,"生日期 = " + rawDate);
                     String[] date = rawDate.split("-");
                     String year = date[0];
                     String month = date[1];
-                    Log.i(TAG,"获取PubDate年份 = " + year + "，月 = " + month);
+                    Log.i(TAG,"获取PubDate年份 = " + year + "，月== " + month);
                     Calendar calendar = Calendar.getInstance();
                     calendar.set(Integer.parseInt(year),Integer.parseInt(month)-1,1);
                     mBook.setPubTime(calendar);
@@ -82,54 +81,21 @@ public class DouBanFetcher extends BookFetcher{
                 }
                 else{
                     Log.w(TAG,"意外的响应代码" + response.code() + "，isbn = " + isbn);
-                    String dialogCotent = String.format(mContext.getResources().getString(
-                            R.string.isbn_unmatched_dialog_content),isbn);
-                    MaterialDialog dialog = new MaterialDialog.Builder(mContext)
-                            .title(R.string.isbn_unmatched_dialog_title)
-                            .content(dialogCotent)
-                            .positiveText(R.string.isbn_unmatched_dialog_positive)
-                            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    //create a book only with isbn
-                                    mBook = new Book();
-                                    mBook.setIsbn(isbn);
-                                    mBook.setAddTime(Calendar.getInstance());
-                                    Intent i = new Intent(mContext,BookEditActivity.class);
-                                    i.putExtra(BookEditActivity.BOOK,mBook);
-                                    i.putExtra(BookEditActivity.downloadCover,false);
-                                    mContext.startActivity(i);
-                                    ((Activity)mContext).finish();
-
-                                }
-                            })
-                            .show();
+                    if(mode == 0){
+                        ((SingleAddActivity)mContext).fetchFailed(
+                                BookFetcher.fetcherID_DB,0,isbn
+                        );
+                    }
                 }
             }
             @Override
             public void onFailure(Call<DouBanJson> call, Throwable t) {
                 Log.w(TAG,"获取豆瓣信息失败，" + t.toString());
-                String dialogCotent = String.format(mContext.getResources().getString(
-                        R.string.request_failed_dialog_content),isbn);
-                MaterialDialog dialog = new MaterialDialog.Builder(mContext)
-                        .title(R.string.isbn_unmatched_dialog_title)
-                        .content(dialogCotent)
-                        .positiveText(R.string.isbn_unmatched_dialog_positive)
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                mBook = new Book();
-                                mBook.setIsbn(isbn);
-                                mBook.setAddTime(Calendar.getInstance());
-                                Intent i = new Intent(mContext,BookEditActivity.class);
-                                i.putExtra(BookEditActivity.BOOK,mBook);
-                                i.putExtra(BookEditActivity.downloadCover,false);
-                                mContext.startActivity(i);
-                                ((Activity)mContext).finish();
-
-                            }
-                        })
-                        .show();
+                if(mode==0){
+                    ((SingleAddActivity)mContext).fetchFailed(
+                            BookFetcher.fetcherID_DB,1,isbn
+                    );
+                }
             }
         });
     }

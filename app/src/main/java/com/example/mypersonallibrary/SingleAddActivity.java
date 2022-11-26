@@ -1,6 +1,7 @@
 package com.example.mypersonallibrary;
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -9,7 +10,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,9 +21,9 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.mypersonallibrary.DouBanFetcher;
 import com.google.zxing.Result;
+import java.util.Calendar;
 import java.util.List;
-
-public class SingleAddActivity extends AppCompatActivity {
+public class SingleAddActivity extends AppCompatActivity{
     private static final String TAG = "SingleAddActivity";
     private Toolbar mToolbar;
     public static Intent newIntent(Context context){
@@ -52,7 +52,7 @@ public class SingleAddActivity extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        switch(item.getItemId()){
             case R.id.menu_simple_add_manually:
                 MaterialDialog dialog = new MaterialDialog.Builder(this)
                         .title(R.string.input_isbn_manually_title)
@@ -86,7 +86,6 @@ public class SingleAddActivity extends AppCompatActivity {
                             }
                         })
                         .show();
-
         }
         return super.onOptionsItemSelected(item);
     }
@@ -110,7 +109,7 @@ public class SingleAddActivity extends AppCompatActivity {
                         @Override
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                             DouBanFetcher fetcher = new DouBanFetcher();
-                            fetcher.getBookInfo(context,isbn);
+                            fetcher.getBookInfo(context,isbn,0);
                         }
                     })
                     .negativeText(android.R.string.cancel)
@@ -124,11 +123,64 @@ public class SingleAddActivity extends AppCompatActivity {
         }
         else{
             DouBanFetcher fetcher = new DouBanFetcher();
-            fetcher.getBookInfo(this,isbn);
+            fetcher.getBookInfo(this,isbn,0);
         }
     }
     public void handleResult(Result rawResult){
         Log.i(TAG,"ScanResult Contents = " + rawResult.getText() + ", Format = " + rawResult.getBarcodeFormat().toString());
         addBook(rawResult.getText());
+    }
+    public void fetchFailed(int fetcherID,int event,String isbn){
+        if(fetcherID == BookFetcher.fetcherID_DB){
+            if(event == 0){
+                event0Dialog(isbn);
+            }
+            else if(event == 1){
+                event1Dialog(isbn);
+            }
+        }
+    }
+    private void event0Dialog(final String isbn){
+        String dialogCotent = String.format(getResources().getString(
+                R.string.isbn_unmatched_dialog_content),isbn);
+        MaterialDialog dialog = new MaterialDialog.Builder(this)
+                .title(R.string.isbn_unmatched_dialog_title)
+                .content(dialogCotent)
+                .positiveText(R.string.isbn_unmatched_dialog_positive)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        Book mBook = new Book();
+                        mBook.setIsbn(isbn);
+                        mBook.setAddTime(Calendar.getInstance());
+                        Intent i = new Intent(SingleAddActivity.this,BookEditActivity.class);
+                        i.putExtra(BookEditActivity.BOOK,mBook);
+                        i.putExtra(BookEditActivity.downloadCover,false);
+                        startActivity(i);
+                        finish();
+                    }
+                })
+                .show();
+    }
+    private void event1Dialog(final String isbn){
+        String dialogCotent = String.format(getResources().getString(
+                R.string.request_failed_dialog_content),isbn);
+        MaterialDialog dialog = new MaterialDialog.Builder(this)
+                .title(R.string.isbn_unmatched_dialog_title)
+                .content(dialogCotent)
+                .positiveText(R.string.isbn_unmatched_dialog_positive)
+                .onPositive(new MaterialDialog.SingleButtonCallback(){
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which){
+                        Book mBook = new Book();
+                        mBook.setIsbn(isbn);
+                        Intent i = new Intent(SingleAddActivity.this,BookEditActivity.class);
+                        i.putExtra(BookEditActivity.BOOK,mBook);
+                        i.putExtra(BookEditActivity.downloadCover,false);
+                        startActivity(i);
+                        finish();
+                    }
+                })
+                .show();
     }
 }

@@ -16,6 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BookEditActivity"/>
+        <activity android:name=".SingleAddActivity"
+            android:theme="@style/AppOverlayTheme"/>
+        <activity android:name=".BookEditActivity"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".BookDetailActivity"
+            android:excludeFromRecents="true"
+            android:taskAffinity=""/>
     </application>
 </manifest>
