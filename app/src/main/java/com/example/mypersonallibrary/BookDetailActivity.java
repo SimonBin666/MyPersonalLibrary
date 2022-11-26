@@ -4,18 +4,20 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.core.content.ContextCompat;
+
 import com.klinker.android.sliding.SlidingActivity;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
-import java.text.SimpleDateFormat;
-import android.text.format.DateFormat;
 public class BookDetailActivity extends SlidingActivity{
     public static String Intent_Book_ToEdit = "BOOKTOEDIT";
     private Book mBook;
@@ -40,6 +42,7 @@ public class BookDetailActivity extends SlidingActivity{
     private TextView labelsTextView;
     private RelativeLayout websiteRelativeLayout;
     private TextView websiteTextView;
+    private TextView addtimeTextView;
     @Override
     public void init(Bundle savedInstanceState){
         Intent intent = getIntent();
@@ -76,22 +79,22 @@ public class BookDetailActivity extends SlidingActivity{
             coverImageView.setImageBitmap(src);
             coverImageView.setBackgroundColor(ContextCompat.getColor(this,android.R.color.white));
         }
-        addtimeTextView = (TextView) findViewById(R.id.book_detail_header_addtime_text_view);
+        addtimeTextView = (TextView)findViewById(R.id.book_detail_header_addtime_text_view);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss EEE z");
         String addTimeString = format.format(mBook.getAddTime().getTime());
         addtimeTextView.setText(addTimeString);
     }
     private void setBookInfo(){
-        authorRelativeLayout = (RelativeLayout) findViewById(R.id.book_info_author_item);
-        authorTextView = (TextView) findViewById(R.id.book_info_author_text_view);
-        translatorRelativeLayout = (RelativeLayout) findViewById(R.id.book_info_translator_item);
-        translatorTextView = (TextView) findViewById(R.id.book_info_translator_text_view);
+        authorRelativeLayout = (RelativeLayout)findViewById(R.id.book_info_author_item);
+        authorTextView = (TextView)findViewById(R.id.book_info_author_text_view);
+        translatorRelativeLayout = (RelativeLayout)findViewById(R.id.book_info_translator_item);
+        translatorTextView = (TextView)findViewById(R.id.book_info_translator_text_view);
         publisherRelativeLayout = (RelativeLayout) findViewById(R.id.book_info_publisher_item);
-        publisherTextView = (TextView) findViewById(R.id.book_info_publisher_text_view);
+        publisherTextView = (TextView)findViewById(R.id.book_info_publisher_text_view);
         pubtimeRelativeLayout = (RelativeLayout) findViewById(R.id.book_info_pubtime_item);
-        pubtimeTextView = (TextView) findViewById(R.id.book_info_pubtime_text_view);
-        isbnRelativeLayout = (RelativeLayout) findViewById(R.id.book_info_isbn_item);
-        isbnTextView = (TextView) findViewById(R.id.book_info_isbn_text_view);
+        pubtimeTextView = (TextView)findViewById(R.id.book_info_pubtime_text_view);
+        isbnRelativeLayout = (RelativeLayout)findViewById(R.id.book_info_isbn_item);
+        isbnTextView = (TextView)findViewById(R.id.book_info_isbn_text_view);
         if(mBook.getAuthors().size()!=0){
             StringBuilder authors = new StringBuilder();
             for(String author: mBook.getAuthors()){

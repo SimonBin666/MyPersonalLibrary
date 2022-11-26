@@ -82,4 +82,10 @@
     <string name="book_info_isbn_image_view">ISBN</string>
     <string name="book_detail_title">细节</string>
     <string name="book_detail_header_text_view">您将这本书添加到</string>
+    <string name="spinner_all_bookshelf">全部</string>
+    <string name="author_suffix">著</string>
+    <string name="book_detail_labels_image_view">标签</string>
+    <string name="book_deleted_snack_bar_0">图书已删除</string>
+    <string name="book_deleted_snack_bar_1">图书已删除</string>
+    <string name="book_deleted_snack_bar_undo">撤消</string>
 </resources>
