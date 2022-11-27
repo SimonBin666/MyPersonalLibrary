@@ -65,7 +65,7 @@ public class BookLab{
     }
     public Book getBook(UUID id){
         try (BookCursorWrapper cursor = queryBooks(
-                BookDBSchema.BookTable.Cols.UUID + " = ？",
+                BookDBSchema.BookTable.Cols.UUID + " = ?",
                 new String[]{id.toString()})
         ){
             if(cursor.getCount() == 0){
@@ -91,7 +91,7 @@ public class BookLab{
         List<Book> mBooks = new ArrayList<>();
         try(BookCursorWrapper cursor
                     = queryBooks(
-                BookDBSchema.BookTable.Cols.BOOKSHELF_ID + "= ？",
+                BookDBSchema.BookTable.Cols.BOOKSHELF_ID + "= ?",
                 new String[]{bookShelfID.toString()})
         ){
             cursor.moveToFirst();
@@ -120,13 +120,13 @@ public class BookLab{
         String uuidString = book.getId().toString();
         mDatabase.delete(
                 BookDBSchema.BookTable.NAME,
-                BookDBSchema.BookTable.Cols.UUID + " = ？",
+                BookDBSchema.BookTable.Cols.UUID + " = ?",
                 new String[]{uuidString}
         );
     }
     public boolean isBookExists(Book book){
         try (BookCursorWrapper cursor = queryBooks(
-                BookDBSchema.BookTable.Cols.UUID + "= ？",
+                BookDBSchema.BookTable.Cols.UUID + "= ?",
                 new String[]{book.getId().toString()})
         ){
             return cursor.getCount()!=0;

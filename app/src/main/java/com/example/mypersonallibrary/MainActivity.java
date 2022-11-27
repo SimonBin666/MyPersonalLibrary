@@ -28,6 +28,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -145,11 +146,13 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed(){
         if(mDrawer!=null && mDrawer.isDrawerOpen()){
             mDrawer.closeDrawer();
-        }else{
+        }
+        else{
             super.onBackPressed();
         }
     }
     private void setToolbar(){
+        setContentView(R.layout.toolbar_main);
         mToolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -179,7 +182,8 @@ public class MainActivity extends AppCompatActivity {
         mActionAddButton.setMenuButtonHideAnimation(AnimationUtils.loadAnimation(this,R.anim.hide_to_bottom));
     }
     private void setRecyclerView(){
-        mRecyclerView = (RecyclerView)findViewById(R.id.booklist_recycler_view);
+        setContentView(R.layout.activity_main_coordinate);
+        mRecyclerView = (RecyclerView) findViewById(R.id.booklist_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
