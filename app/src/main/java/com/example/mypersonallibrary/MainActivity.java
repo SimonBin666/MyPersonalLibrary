@@ -152,8 +152,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void setToolbar(){
-        setContentView(R.layout.toolbar_main);
-        mToolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setContentView(R.layout.activity_main);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
@@ -182,7 +182,6 @@ public class MainActivity extends AppCompatActivity {
         mActionAddButton.setMenuButtonHideAnimation(AnimationUtils.loadAnimation(this,R.anim.hide_to_bottom));
     }
     private void setRecyclerView(){
-        setContentView(R.layout.activity_main_coordinate);
         mRecyclerView = (RecyclerView) findViewById(R.id.booklist_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -267,7 +266,8 @@ public class MainActivity extends AppCompatActivity {
         if(mRecyclerViewAdapter ==null){
             mRecyclerViewAdapter = new BookAdapter(mBooks);
             mRecyclerView.setAdapter(mRecyclerViewAdapter);
-        }else{
+        }
+        else{
             mRecyclerViewAdapter.notifyDataSetChanged();
         }
     }
@@ -280,8 +280,8 @@ public class MainActivity extends AppCompatActivity {
     private void multiSelect(int position){
         if(mActionMode!=null){
             int index = multiSelectList.indexOf(mBooks.get(position));
-            Log.d(TAG,"Select in List Position " +index);
-            if(index == -1){//not in the list
+            Log.d(TAG,"在列表位置选择" +index);
+            if(index == -1){
                 multiSelectList.add(mBooks.get(position));
             }else{
                 multiSelectList.remove(index);

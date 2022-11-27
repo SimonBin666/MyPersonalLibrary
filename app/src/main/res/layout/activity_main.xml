@@ -11,15 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <include
+            android:id="@+id/toolbar_main"
             layout="@layout/toolbar_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <FrameLayout
-            android:id="@+id/fragment_container"
+        <include
+            android:id="@+id/activity_main_coordinate"
+            layout="@layout/activity_main_coordinate"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"/>
     </LinearLayout>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nvView"
