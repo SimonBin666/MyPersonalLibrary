@@ -7,7 +7,7 @@ android {
     buildToolsVersion project.BuildToolsVersion
     defaultConfig {
         applicationId "com.example.mypersonallibrary"
-        minSdkVersion 24
+        minSdkVersion 23
         targetSdkVersion project.TargetSdkVersion
         versionCode 1
         versionName "1.0"

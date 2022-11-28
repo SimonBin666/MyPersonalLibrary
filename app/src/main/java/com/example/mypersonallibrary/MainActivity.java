@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
     private void setFloatingActionButton(){
-        mActionAddButton = (FloatingActionMenu) findViewById(R.id.fab_menu_add);
+        mActionAddButton = (FloatingActionMenu)findViewById(R.id.fab_menu_add);
         fab1 = (FloatingActionButton) findViewById(R.id.fab_menu_item_1);
         fab1.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -254,9 +254,10 @@ public class MainActivity extends AppCompatActivity {
         mBooks = bookLab.getBooks();
         if(mSpinner!=null){
             BookShelf selectedBookShelf = (BookShelf) mSpinner.getSelectedItem();
-            if (selectedBookShelf.getTitle().equals(getString(R.string.spinner_all_bookshelf))) {
+            if(selectedBookShelf.getTitle().equals(getString(R.string.spinner_all_bookshelf))) {
                 mBooks = bookLab.getBooks();
-            } else {
+            }
+            else{
                 mBooks = bookLab.getBooks(selectedBookShelf.getId());
             }
         }
@@ -283,7 +284,8 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG,"在列表位置选择" +index);
             if(index == -1){
                 multiSelectList.add(mBooks.get(position));
-            }else{
+            }
+            else{
                 multiSelectList.remove(index);
             }
             if(multiSelectList.size()>0){
@@ -291,13 +293,12 @@ public class MainActivity extends AppCompatActivity {
                 mActionMode.setTitle(title);
             }else{
                 mActionMode.finish();
-
             }
             mRecyclerViewAdapter.notifyDataSetChanged();
         }
 
     }
-    public class BookHolder extends RecyclerView.ViewHolder {
+    public class BookHolder extends RecyclerView.ViewHolder{
         private ImageView mCoverImageView;
         private TextView mTitleTextView;
         private TextView mPublisherTextView;
@@ -313,18 +314,17 @@ public class MainActivity extends AppCompatActivity {
         }
         public void bindBook(Book book){
             mTitleTextView.setText(book.getTitle());
-
             StringBuilder authorAndPub = new StringBuilder();
             for(String author : book.getAuthors()){
                 authorAndPub.append(author);
-                authorAndPub.append(",");
+                authorAndPub.append("，");
             }
             authorAndPub.deleteCharAt(authorAndPub.length()-1);
             if(book.getPublisher().length()!=0){
                 if(authorAndPub.length()!=0){
                     authorAndPub.append(" ");
                     authorAndPub.append(getResources().getString(R.string.author_suffix));
-                    authorAndPub.append(",   ");
+                    authorAndPub.append("，");
                 }
                 authorAndPub.append(book.getPublisher());
             }
@@ -335,7 +335,8 @@ public class MainActivity extends AppCompatActivity {
             StringBuilder pubDate = new StringBuilder();
             if(year == 9999){
                 pubDate.append(getResources().getString(R.string.pubdate_unset));
-            }else{
+            }
+            else{
                 pubDate.append(year);
                 pubDate.append("-");
                 pubDate.append(month+1);
@@ -382,9 +383,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private boolean showFAM = true;
-    private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+    private ActionMode.Callback mActionModeCallback = new ActionMode.Callback(){
         @Override
-        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+        public boolean onCreateActionMode(ActionMode mode, Menu menu){
             MenuInflater inflater = mode.getMenuInflater();
             inflater.inflate(R.menu.menu_multiselect,menu);
             mActionAddButton.hideMenuButton(true);
@@ -393,11 +394,11 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu){
             return false;
         }
         @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item){
             switch (item.getItemId()){
                 case R.id.menu_item_select_all:
                     multiSelectList = mBooks;
@@ -421,7 +422,8 @@ public class MainActivity extends AppCompatActivity {
                                     mCoordinatorLayout,
                                     R.string.book_deleted_snack_bar_0,
                                     Snackbar.LENGTH_SHORT);
-                        }else{
+                        }
+                        else{
                             snackbar = Snackbar.make(
                                     mCoordinatorLayout,
                                     R.string.book_deleted_snack_bar_1,
